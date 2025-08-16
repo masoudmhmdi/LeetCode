@@ -1,30 +1,28 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using LeetCodes._638._Shopping_Offers;
+
 public class Program()
 {
 
     public static void Main()
     {
-        var data = new DTO()
-        {
-            data = "noModified"
-        };
+        var needs = new List<int>() { 3, 2 };
+        var price = new List<int>() { 2, 5 };
+        var offers = new List<IList<int>>();
+        offers.Add([3, 0, 5]);
+        offers.Add([1, 2, 10]);
+        
+       // see none offer as offer 
+        offers.Add([1, 0, 2]);
+        offers.Add([0, 1, 5]);
+        var shoppingOffer = new Solution();
 
-
-        Program.Modifier(data);
+        shoppingOffer.ShoppingOffers(price, offers, needs);
         
         Console.WriteLine("Hello World!");
         
     }
 
-    public static void Modifier(DTO dto)
-    {
-        dto = null;
-    }
 }
 
-
-public class DTO
-{
-    public string data { get; set; }
-}
