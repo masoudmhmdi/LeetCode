@@ -3,10 +3,35 @@
 public class Solution {
     public int ShoppingOffers(IList<int> price, IList<IList<int>> special, IList<int> needs)
     {
+
+        for(var i = 0; i < needs.Count; i++)
+        {
+            
+            var x = new int[price.Count + 1];
+
+            x[i] = 1;
+            x[price.Count] = price[i];
+            special.Add(x);
+
+        }
         
         var result = this.DFS(special, needs, 0, null);
 
-        return 0;
+        if (result is not null)
+        {
+            return (int)result;
+        }
+        else
+        {
+
+            var tem = 0;
+            for (int i = 0; i < needs.Count; i++)
+            {
+                tem = tem + (needs[i] * price[i]);
+            }
+            return tem;
+        }
+
     }
 
     public IList<IList<int>> GetValidSpecialOffers(IList<IList<int>> special, IList<int> needs)
@@ -36,47 +61,64 @@ public class Solution {
         
     }
 
-    public int DFS(IList<IList<int>> special, IList<int> needs , int price, int? minPrice)
+    public int? DFS(IList<IList<int>> special, IList<int> needs , int price, int? minPrice)
     {
         var validOffers = this.GetValidSpecialOffers(special, needs);
 
         foreach (var offer in validOffers)
         {
             var newNeed = this.Buy(offer, needs);
+            var newPrice = price + offer.Last();
 
             //check this is an end of graph?
-            if (newNeed.Max() > 0)
-            {
+            // if (newNeed.Max() > 0)
+            // {
                 // call it with new offers and need and price
-             var x =  DFS(validOffers,newNeed,offer.Last() + price, minPrice);
-            }
-            else
+             minPrice = DFS(validOffers,newNeed,newPrice, minPrice);
+            // }
+            // else
+            // {
+            //     if (minPrice is null)
+            //     {
+            //         minPrice = price;
+            //     }
+            //     if (price < minPrice)
+            //     {
+            //         minPrice = price;
+            //     }
+            //
+            //     price = 0;
+            //
+            // }
+
+            if (newNeed.Max() == 0)
             {
                 if (minPrice is null)
                 {
-                    minPrice = price;
-                }
-                if (price < minPrice)
-                {
-                    minPrice = price;
+                    minPrice = newPrice;
                 }
 
+                if (newPrice < minPrice)
+                {
+                    minPrice = newPrice;
+                }
             }
 
         }
         
-        return minPrice ?? 0;
+        return minPrice;
         
     }
 
     public IList<int> Buy(IList<int> special, IList<int> needs)
     {
 
+        var newNeed = new List<int>();
         for (int i = 0; i < needs.Count; i++)
         {
-           needs[i] = needs[i] - special[i]; 
+            newNeed.Add(needs[i] - special[i]);
         }
         
-        return needs;
+        return newNeed;
     }
 }
