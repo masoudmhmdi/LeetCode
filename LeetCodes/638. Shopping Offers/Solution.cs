@@ -38,17 +38,23 @@ public class Solution {
 
     public int DFS(IList<IList<int>> special, IList<int> needs , int price, int? minPrice)
     {
-        var validOffers = this.GetValidSpecialOffers(special, needs);
+        var copyOfList = new List<int>();
+
+        foreach (var i in needs)
+        {
+            copyOfList.Add(i);
+        }
+        var validOffers = this.GetValidSpecialOffers(special, copyOfList);
 
         foreach (var offer in validOffers)
         {
-            var newNeed = this.Buy(offer, needs);
+            var newNeed = this.Buy(offer, copyOfList);
 
             //check this is an end of graph?
             if (newNeed.Max() > 0)
             {
                 // call it with new offers and need and price
-             var x =  DFS(validOffers,newNeed,offer.Last() + price, minPrice);
+             minPrice = DFS(validOffers,newNeed,offer.Last() + price, minPrice);
             }
             else
             {
