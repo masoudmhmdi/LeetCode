@@ -13,9 +13,6 @@ public class Program()
         offers.Add([3, 0, 5]);
         offers.Add([1, 2, 10]);
         
-       // see none offer as offer 
-        offers.Add([1, 0, 2]);
-        offers.Add([0, 1, 5]);
         var shoppingOffer = new Solution();
 
         shoppingOffer.ShoppingOffers(price, offers, needs);
