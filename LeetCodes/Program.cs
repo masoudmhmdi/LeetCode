@@ -1,24 +1,30 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using LeetCodes._638._Shopping_Offers;
+using LeetCodes.AVLTree;
 
 public class Program()
 {
 
     public static void Main()
     {
-        var needs = new List<int>() { 3, 2 };
-        var price = new List<int>() { 2, 5 };
-        var offers = new List<IList<int>>();
-        offers.Add([3, 0, 5]);
-        offers.Add([1, 2, 10]);
+        var avlTree = new AvlTree(50);
         
-        var shoppingOffer = new Solution();
+        
+        avlTree.Add(3);
+        avlTree.Add(2);
+        avlTree.Add(5);
+        avlTree.Add(1);
+        avlTree.Add(4);
+        avlTree.Add(30);
+        avlTree.Add(60);
+        avlTree.Add(-1);
+        avlTree.Add(-2);
+        avlTree.Add(-3);
+        
+        
+        avlTree.MyPrintTree();
 
-        shoppingOffer.ShoppingOffers(price, offers, needs);
-        
-        Console.WriteLine("Hello World!");
-        
     }
 
 }
