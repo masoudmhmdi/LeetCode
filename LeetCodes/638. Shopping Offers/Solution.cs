@@ -15,22 +15,16 @@ public class Solution {
 
         }
         
-        var result = this.DFS(special, needs, 0, null);
-
-        if (result is not null)
+        var tem = 0;
+        for (int i = 0; i < needs.Count; i++)
         {
-            return (int)result;
+            tem = tem + (needs[i] * price[i]);
         }
-        else
-        {
+        
+        var result = this.DFS(special, needs, 0, tem);
+        
+        return result;
 
-            var tem = 0;
-            for (int i = 0; i < needs.Count; i++)
-            {
-                tem = tem + (needs[i] * price[i]);
-            }
-            return tem;
-        }
 
     }
 
@@ -61,8 +55,10 @@ public class Solution {
         
     }
 
-    private int? DFS(IList<IList<int>> special, IList<int> needs , int price, int? minPrice)
+    private int DFS(IList<IList<int>> special, IList<int> needs , int price, int minPrice)
     {
+        
+        if(price >  minPrice) return minPrice;
         var validOffers = this.GetValidSpecialOffers(special, needs);
 
         foreach (var offer in validOffers)
@@ -73,10 +69,6 @@ public class Solution {
              minPrice = DFS(validOffers,newNeed,newPrice, minPrice);
             if (newNeed.Max() == 0)
             {
-                if (minPrice is null)
-                {
-                    minPrice = newPrice;
-                }
 
                 if (newPrice < minPrice)
                 {
